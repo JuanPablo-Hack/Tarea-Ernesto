@@ -1,0 +1,477 @@
+Gramática
+
+    0 $accept: Prog $end
+
+    1 Prog: %empty
+    2     | TOK_MAIN TOK_LB Vardefs Stmts TOK_RB
+
+    3 Vardefs: %empty
+    4        | Vardef TOK_SEMICOLON Vardefs
+
+    5 Vardef: TOK_TYPEINT TOK_ID
+    6       | TOK_TYPEFLOAT TOK_ID
+
+    7 Stmts: %empty
+    8      | Stmt TOK_SEMICOLON Stmts
+
+    9 Stmt: TOK_ID TOK_ASSIGN expr
+   10     | TOK_PRINTID TOK_ID
+   11     | TOK_PRINTEXP expr
+   12     | %empty
+
+   13 expr: INT
+   14     | FLOAT
+   15     | TOK_ID
+   16     | expr TOK_MUL expr
+   17     | expr TOK_PLUS expr
+   18     | expr TOK_DIV expr
+   19     | expr TOK_SUB expr
+   20     | expr TOK_POW expr
+   21     | %empty
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+error (256)
+TOK_SEMICOLON (258) 4 8
+TOK_SUB (259) 19
+TOK_MUL (260) 16
+TOK_PLUS (261) 17
+TOK_DIV (262) 18
+TOK_POW (263) 20
+TOK_PRINTID (264) 10
+TOK_PRINTEXP (265) 11
+TOK_MAIN (266) 2
+TOK_LB (267) 2
+TOK_RB (268) 2
+TOK_ASSIGN (269) 9
+TOK_ID (270) 5 6 9 10 15
+TOK_TYPEINT (271) 5
+TOK_TYPEFLOAT (272) 6
+INT (273) 13
+FLOAT (274) 14
+
+
+No terminales con las reglas donde aparecen
+
+$accept (20)
+    en la izquierda: 0
+Prog (21)
+    en la izquierda: 1 2, en la derecha: 0
+Vardefs (22)
+    en la izquierda: 3 4, en la derecha: 2 4
+Vardef (23)
+    en la izquierda: 5 6, en la derecha: 4
+Stmts (24)
+    en la izquierda: 7 8, en la derecha: 2 8
+Stmt (25)
+    en la izquierda: 9 10 11 12, en la derecha: 8
+expr (26)
+    en la izquierda: 13 14 15 16 17 18 19 20 21, en la derecha: 9 11
+    16 17 18 19 20
+
+
+Estado 0
+
+    0 $accept: . Prog $end
+
+    TOK_MAIN  desplazar e ir al estado 1
+
+    $default  reduce usando la regla 1 (Prog)
+
+    Prog  ir al estado 2
+
+
+Estado 1
+
+    2 Prog: TOK_MAIN . TOK_LB Vardefs Stmts TOK_RB
+
+    TOK_LB  desplazar e ir al estado 3
+
+
+Estado 2
+
+    0 $accept: Prog . $end
+
+    $end  desplazar e ir al estado 4
+
+
+Estado 3
+
+    2 Prog: TOK_MAIN TOK_LB . Vardefs Stmts TOK_RB
+
+    TOK_TYPEINT    desplazar e ir al estado 5
+    TOK_TYPEFLOAT  desplazar e ir al estado 6
+
+    $default  reduce usando la regla 3 (Vardefs)
+
+    Vardefs  ir al estado 7
+    Vardef   ir al estado 8
+
+
+Estado 4
+
+    0 $accept: Prog $end .
+
+    $default  aceptar
+
+
+Estado 5
+
+    5 Vardef: TOK_TYPEINT . TOK_ID
+
+    TOK_ID  desplazar e ir al estado 9
+
+
+Estado 6
+
+    6 Vardef: TOK_TYPEFLOAT . TOK_ID
+
+    TOK_ID  desplazar e ir al estado 10
+
+
+Estado 7
+
+    2 Prog: TOK_MAIN TOK_LB Vardefs . Stmts TOK_RB
+
+    TOK_PRINTID   desplazar e ir al estado 11
+    TOK_PRINTEXP  desplazar e ir al estado 12
+    TOK_ID        desplazar e ir al estado 13
+
+    TOK_SEMICOLON  reduce usando la regla 12 (Stmt)
+    $default       reduce usando la regla 7 (Stmts)
+
+    Stmts  ir al estado 14
+    Stmt   ir al estado 15
+
+
+Estado 8
+
+    4 Vardefs: Vardef . TOK_SEMICOLON Vardefs
+
+    TOK_SEMICOLON  desplazar e ir al estado 16
+
+
+Estado 9
+
+    5 Vardef: TOK_TYPEINT TOK_ID .
+
+    $default  reduce usando la regla 5 (Vardef)
+
+
+Estado 10
+
+    6 Vardef: TOK_TYPEFLOAT TOK_ID .
+
+    $default  reduce usando la regla 6 (Vardef)
+
+
+Estado 11
+
+   10 Stmt: TOK_PRINTID . TOK_ID
+
+    TOK_ID  desplazar e ir al estado 17
+
+
+Estado 12
+
+   11 Stmt: TOK_PRINTEXP . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 21
+
+
+Estado 13
+
+    9 Stmt: TOK_ID . TOK_ASSIGN expr
+
+    TOK_ASSIGN  desplazar e ir al estado 22
+
+
+Estado 14
+
+    2 Prog: TOK_MAIN TOK_LB Vardefs Stmts . TOK_RB
+
+    TOK_RB  desplazar e ir al estado 23
+
+
+Estado 15
+
+    8 Stmts: Stmt . TOK_SEMICOLON Stmts
+
+    TOK_SEMICOLON  desplazar e ir al estado 24
+
+
+Estado 16
+
+    4 Vardefs: Vardef TOK_SEMICOLON . Vardefs
+
+    TOK_TYPEINT    desplazar e ir al estado 5
+    TOK_TYPEFLOAT  desplazar e ir al estado 6
+
+    $default  reduce usando la regla 3 (Vardefs)
+
+    Vardefs  ir al estado 25
+    Vardef   ir al estado 8
+
+
+Estado 17
+
+   10 Stmt: TOK_PRINTID TOK_ID .
+
+    $default  reduce usando la regla 10 (Stmt)
+
+
+Estado 18
+
+   15 expr: TOK_ID .
+
+    $default  reduce usando la regla 15 (expr)
+
+
+Estado 19
+
+   13 expr: INT .
+
+    $default  reduce usando la regla 13 (expr)
+
+
+Estado 20
+
+   14 expr: FLOAT .
+
+    $default  reduce usando la regla 14 (expr)
+
+
+Estado 21
+
+   11 Stmt: TOK_PRINTEXP expr .
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+
+    TOK_SUB   desplazar e ir al estado 26
+    TOK_MUL   desplazar e ir al estado 27
+    TOK_PLUS  desplazar e ir al estado 28
+    TOK_DIV   desplazar e ir al estado 29
+    TOK_POW   desplazar e ir al estado 30
+
+    $default  reduce usando la regla 11 (Stmt)
+
+
+Estado 22
+
+    9 Stmt: TOK_ID TOK_ASSIGN . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 31
+
+
+Estado 23
+
+    2 Prog: TOK_MAIN TOK_LB Vardefs Stmts TOK_RB .
+
+    $default  reduce usando la regla 2 (Prog)
+
+
+Estado 24
+
+    8 Stmts: Stmt TOK_SEMICOLON . Stmts
+
+    TOK_PRINTID   desplazar e ir al estado 11
+    TOK_PRINTEXP  desplazar e ir al estado 12
+    TOK_ID        desplazar e ir al estado 13
+
+    TOK_SEMICOLON  reduce usando la regla 12 (Stmt)
+    $default       reduce usando la regla 7 (Stmts)
+
+    Stmts  ir al estado 32
+    Stmt   ir al estado 15
+
+
+Estado 25
+
+    4 Vardefs: Vardef TOK_SEMICOLON Vardefs .
+
+    $default  reduce usando la regla 4 (Vardefs)
+
+
+Estado 26
+
+   19 expr: expr TOK_SUB . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 33
+
+
+Estado 27
+
+   16 expr: expr TOK_MUL . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 34
+
+
+Estado 28
+
+   17 expr: expr TOK_PLUS . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 35
+
+
+Estado 29
+
+   18 expr: expr TOK_DIV . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 36
+
+
+Estado 30
+
+   20 expr: expr TOK_POW . expr
+
+    TOK_ID  desplazar e ir al estado 18
+    INT     desplazar e ir al estado 19
+    FLOAT   desplazar e ir al estado 20
+
+    $default  reduce usando la regla 21 (expr)
+
+    expr  ir al estado 37
+
+
+Estado 31
+
+    9 Stmt: TOK_ID TOK_ASSIGN expr .
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+
+    TOK_SUB   desplazar e ir al estado 26
+    TOK_MUL   desplazar e ir al estado 27
+    TOK_PLUS  desplazar e ir al estado 28
+    TOK_DIV   desplazar e ir al estado 29
+    TOK_POW   desplazar e ir al estado 30
+
+    $default  reduce usando la regla 9 (Stmt)
+
+
+Estado 32
+
+    8 Stmts: Stmt TOK_SEMICOLON Stmts .
+
+    $default  reduce usando la regla 8 (Stmts)
+
+
+Estado 33
+
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   19     | expr TOK_SUB expr .
+   20     | expr . TOK_POW expr
+
+    TOK_MUL   desplazar e ir al estado 27
+    TOK_PLUS  desplazar e ir al estado 28
+    TOK_DIV   desplazar e ir al estado 29
+    TOK_POW   desplazar e ir al estado 30
+
+    $default  reduce usando la regla 19 (expr)
+
+
+Estado 34
+
+   16 expr: expr . TOK_MUL expr
+   16     | expr TOK_MUL expr .
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+
+    TOK_MUL  desplazar e ir al estado 27
+    TOK_DIV  desplazar e ir al estado 29
+    TOK_POW  desplazar e ir al estado 30
+
+    $default  reduce usando la regla 16 (expr)
+
+
+Estado 35
+
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   17     | expr TOK_PLUS expr .
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+
+    TOK_MUL  desplazar e ir al estado 27
+    TOK_DIV  desplazar e ir al estado 29
+    TOK_POW  desplazar e ir al estado 30
+
+    $default  reduce usando la regla 17 (expr)
+
+
+Estado 36
+
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   18     | expr TOK_DIV expr .
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+
+    TOK_DIV  desplazar e ir al estado 29
+    TOK_POW  desplazar e ir al estado 30
+
+    $default  reduce usando la regla 18 (expr)
+
+
+Estado 37
+
+   16 expr: expr . TOK_MUL expr
+   17     | expr . TOK_PLUS expr
+   18     | expr . TOK_DIV expr
+   19     | expr . TOK_SUB expr
+   20     | expr . TOK_POW expr
+   20     | expr TOK_POW expr .
+
+    TOK_POW  desplazar e ir al estado 30
+
+    $default  reduce usando la regla 20 (expr)
