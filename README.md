@@ -17,7 +17,7 @@ Credenciales de los miembros del equipo:
 - Para ejecutar el programa, siga estos pasos:
     1. Ejecute el comando 'make' en la terminal
     2. El archivo de salida o ejecutable se llama "calc"
-    3. Escriba el comando: ./calc <(input_file_name) para ejecutar el programa
+    3. Escriba el comando: ./calc < test para ejecutar el programa
 - Información Adicional:
     1. Se han utilizado estructuras para mantener valores y tipos de expresión
     2. Se han utilizado diferentes técnicas de manejo de errores para capturar varias condiciones de falla

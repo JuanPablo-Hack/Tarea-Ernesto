@@ -1,12 +1,15 @@
 main.exec(){
   flt b;
-  flt c;
-  flt a;
+  flt x;
+  flt y;
+  flt z;
   b = 4 + 2 * 10 + 3 *  5 + 1;
   prte b; 
-  c= 6.0 + 4.0;
-  prte c;
-  a= 5.0 ^ 4.0;
-  prte a;
+  x = 5.0 + 5.0;
+  prte x;
+  y = 55.0;
+  x = 5.0;
+  z= y / x;
+  prte z;
 
 }
